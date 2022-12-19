@@ -1,0 +1,9 @@
+{
+    "name": "com.axvemi.inventories",
+    "version": "0.0.1",
+    "displayName": "Axvemi Inventory System",
+    "author": {
+        "name": "Axel Velasco",
+        "email": "axvemi@gmail.com"
+    }
+}

@@ -1,9 +1,16 @@
 {
-    "name": "com.axvemi.inventories",
-    "version": "0.0.1",
-    "displayName": "Axvemi Inventory System",
-    "author": {
-        "name": "Axel Velasco",
-        "email": "axvemi@gmail.com"
+  "name": "com.axvemi.inventories",
+  "version": "0.9.0",
+  "displayName": "Axvemi Inventory System",
+  "author": {
+    "name": "Axel Velasco",
+    "email": "axvemi@gmail.com"
+  },
+  "samples": [
+    {
+      "displayName": "Grid Inventory",
+      "description": "Grid inventory with a defined slot amount.",
+      "path": "Samples~/GridInventory"
     }
+  ]
 }

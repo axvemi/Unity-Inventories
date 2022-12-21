@@ -8,6 +8,11 @@
   },
   "samples": [
     {
+      "displayName": "Commons",
+      "description": "Import this before any other sample",
+      "path": "Samples~/Commons"
+    },
+    {
       "displayName": "Grid Inventory",
       "description": "Grid inventory with a defined slot amount.",
       "path": "Samples~/GridInventory"

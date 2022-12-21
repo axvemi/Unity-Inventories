@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Axvemi.Inventories {
+
+    public class FailedToFindSlotException : Exception { }
     /// <summary>
     /// Representation of an inventory.
     /// Composed by inventory slots, that can have T, where T : IInventoryItem<T>
@@ -74,6 +76,10 @@ namespace Axvemi.Inventories {
         public void AddItem(T item, int ammount = 1) {
             for (int i = 0; i < ammount; i++) {
                 InventorySlot<T> slot = GetFreeInventorySlot(item);
+                if(slot == null)
+                {
+                    throw new FailedToFindSlotException();
+                }
                 slot.StoreItem(item);
             }
         }

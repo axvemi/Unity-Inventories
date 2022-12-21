@@ -4,7 +4,7 @@ namespace Axvemi.Inventories.Samples
 {
     public class GridInventorySampleManager : MonoBehaviour
     {
-        public Inventory<Item> inventory;
+        private Inventory<Item> inventory;
 
         [Header("Data")]
         [SerializeField] private ItemScriptableObject swordScriptableObject;
@@ -18,6 +18,8 @@ namespace Axvemi.Inventories.Samples
 
         [Header("UI")]
         [SerializeField] private GridInventoryUIController inventoryUIController;
+
+        public Inventory<Item> Inventory { get => inventory;}
 
         private void Awake()
         {

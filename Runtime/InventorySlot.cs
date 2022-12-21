@@ -3,7 +3,7 @@ using System;
 namespace Axvemi.Inventories {
 
     /// <summary>
-    /// Exception thrown when its not possible to store an item
+    /// Exception thrown when its not possible to store an item in the slot
     /// </summary>
     public class FailedToStoreItemException : Exception { }
 

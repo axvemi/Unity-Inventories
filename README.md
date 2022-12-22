@@ -90,3 +90,5 @@ The Sample provides a Scene and the necesary script, with a debug menu on the ri
 
 If you click on an item, it will be moved to the mouse, if you click again, it will be swapped with whatever is on the target slot.
 You can also hold the left-shift key before clicking, this will show an emergent window where you can choose how many items to transfer.
+
+![Grid Inventory Demo Scene](./Documentation/gridInventoryDemo.png)

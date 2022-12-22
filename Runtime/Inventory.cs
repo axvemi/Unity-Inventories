@@ -90,7 +90,7 @@ namespace Axvemi.Inventories {
         /// </summary>
         /// <param name="itemId">Items with the id to remove</param>
         /// <param name="amount">Amount to remove</param>
-        public void RemoveItem(string itemId, int amount)
+        public void RemoveItem(string itemId, int amount = 1)
         {
             for(int i = 0; i < amount; i++)
             {

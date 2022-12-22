@@ -33,8 +33,24 @@ namespace Axvemi.Inventories {
             get => this.inventory;
             set => this.inventory = value;
         }
-        public T Item => this.item;
-        public int Amount => this.amount;
+        public T Item
+        {
+            get => this.item;
+            set
+            {
+                this.item = value;
+                OnSlotUpdated?.Invoke(this);
+            }
+        }
+        public int Amount
+        {
+            get => this.amount;
+            set
+            {
+                this.amount = value;
+                OnSlotUpdated?.Invoke(this);
+            }
+        }
 
         /// <summary>
         /// If they are the same object, move all the possible amount from slot1 to slot2.

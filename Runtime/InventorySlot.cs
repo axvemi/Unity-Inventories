@@ -23,6 +23,8 @@ namespace Axvemi.Inventories {
         /// </summary>
         public event Action<InventorySlot<T>> OnSlotUpdated;
 
+        public InventorySlot() { }
+
         public InventorySlot(Inventory<T> inventory)
         {
             this.inventory = inventory;

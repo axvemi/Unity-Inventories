@@ -12,7 +12,9 @@ namespace Axvemi.Inventories {
     public class Inventory<T> where T : IInventoryItem
     {
         private List<InventorySlot<T>> slots;
- 
+
+        public List<InventorySlot<T>> Slots { get => slots; set => slots = value; }
+
         /// <summary>
         /// A new slot has been added to the inventory
         /// </summary>
@@ -39,7 +41,6 @@ namespace Axvemi.Inventories {
             }
         }
 
-        public List<InventorySlot<T>> Slots => this.slots;
 
         /// <summary>
         /// Create a new empty slot

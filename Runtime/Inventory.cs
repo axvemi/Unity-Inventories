@@ -9,7 +9,7 @@ namespace Axvemi.Inventories {
     /// Representation of an inventory.
     /// Composed by inventory slots, that can have T, where T : IInventoryItem<T>
     /// </summary>
-    public class Inventory<T> where T : IInventoryItem<T>
+    public class Inventory<T> where T : IInventoryItem
     {
         private List<InventorySlot<T>> slots;
  

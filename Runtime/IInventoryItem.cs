@@ -3,8 +3,7 @@ namespace Axvemi.Inventories
     /// <summary>
     /// Interface that allows an object to be stored inside an inventory
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IInventoryItem<T>
+    public interface IInventoryItem
     {
         /// <summary>
         /// Identifier of the item.
@@ -25,7 +24,7 @@ namespace Axvemi.Inventories
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public bool IsSameItem(IInventoryItem<T> item) => this.GetId().Equals(item.GetId());
+        public bool IsSameItem(IInventoryItem item) => this.GetId().Equals(item.GetId());
 
         /// <summary>
         /// Wether it allows stacking an infinite amount in the same slot.

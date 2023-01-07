@@ -12,7 +12,7 @@ namespace Axvemi.Inventories {
     /// <summary>
     /// Slot of the inventory. Contains a T, or nothing (null)
     /// </summary>
-    public class InventorySlot<T> where T : IInventoryItem<T> {
+    public class InventorySlot<T> where T : IInventoryItem {
 
         private Inventory<T> inventory;
         private T item;

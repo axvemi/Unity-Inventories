@@ -27,7 +27,7 @@ namespace Axvemi.Inventories
         public bool IsSameItem(IInventoryItem item) => this.GetId().Equals(item.GetId());
 
         /// <summary>
-        /// Wether it allows stacking an infinite amount in the same slot.
+        /// Whether it allows stacking an infinite amount in the same slot.
         /// If the max size is 0, allow it
         /// </summary>
         /// <returns></returns>

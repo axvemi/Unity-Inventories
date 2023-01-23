@@ -4,8 +4,6 @@ namespace Axvemi.Inventories.Samples
 {
     public class GridInventorySampleManager : MonoBehaviour
     {
-        private Inventory<Item> inventory;
-
         [Header("Data")]
         [SerializeField] private ItemScriptableObject swordScriptableObject;
         [SerializeField] private ItemScriptableObject redPotionScriptableObject;
@@ -19,23 +17,23 @@ namespace Axvemi.Inventories.Samples
         [Header("UI")]
         [SerializeField] private GridInventoryUIController inventoryUIController;
 
-        public Inventory<Item> Inventory { get => inventory;}
+        public Inventory<Item> Inventory { get; private set; }
 
         private void Awake()
         {
-            inventory = new Inventory<Item>(slotAmount);
-            inventoryUIController.Inventory = inventory;
+            Inventory = new Inventory<Item>(slotAmount);
+            inventoryUIController.Inventory = Inventory;
         }
 
         private void Start()
         {
             //ADD DEMO ITEMS
-            inventory.AddItem(new Item(swordScriptableObject));
-            inventory.AddItem(new Item(swordScriptableObject));
-            inventory.AddItem(new Item(redPotionScriptableObject), 5);
-            inventory.AddItem(new Item(bluePotionScriptableObject), 2);
-            inventory.AddItem(new Item(woolPotionScriptableObject), 30);
-            inventory.AddItem(new Item(woodenLogPotionScriptableObject), 60);
+            Inventory.AddItem(new Item(swordScriptableObject));
+            Inventory.AddItem(new Item(swordScriptableObject));
+            Inventory.AddItem(new Item(redPotionScriptableObject), 5);
+            Inventory.AddItem(new Item(bluePotionScriptableObject), 2);
+            Inventory.AddItem(new Item(woolPotionScriptableObject), 30);
+            Inventory.AddItem(new Item(woodenLogPotionScriptableObject), 60);
         }
     }
 }

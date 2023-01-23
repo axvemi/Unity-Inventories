@@ -8,11 +8,9 @@ namespace Axvemi.Inventories.Samples
     {
         [SerializeField] private GridInventoryMoveAmountUIController moveAmountUIController;
 
-        private InventorySlot<Item> mouseInventorySlot = new InventorySlot<Item>(null);
+        public InventorySlot<Item> MouseInventorySlot { get; set; } = new(null);
 
-        public InventorySlot<Item> MouseInventorySlot { get => mouseInventorySlot; set => mouseInventorySlot = value; }
-
-        void Update()
+        private void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -31,28 +29,28 @@ namespace Axvemi.Inventories.Samples
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 //Hover slot to cursor
-                if (mouseInventorySlot.Item == null)
+                if (MouseInventorySlot.Item == null)
                 {
-                    moveAmountUIController.OpenMoveAmount(hoverSlot, mouseInventorySlot);
+                    moveAmountUIController.OpenMoveAmount(hoverSlot, MouseInventorySlot);
                 }
                 //Cursor to hover slot
                 else
                 {
-                    moveAmountUIController.OpenMoveAmount(mouseInventorySlot, hoverSlot);
+                    moveAmountUIController.OpenMoveAmount(MouseInventorySlot, hoverSlot);
                 }
             }
             //Transfer all amount
             else
             {
                 //Move from the hover slot to the cursor
-                if (mouseInventorySlot.Item == null)
+                if (MouseInventorySlot.Item == null)
                 {
-                    hoverSlot.MoveBetweenSlots(mouseInventorySlot, hoverSlot.Amount);
+                    hoverSlot.MoveBetweenSlots(MouseInventorySlot, hoverSlot.Amount);
                 }
                 //Move from the cursor to the slot
                 else
                 {
-                    mouseInventorySlot.MoveBetweenSlots(hoverSlot, mouseInventorySlot.Amount);
+                    MouseInventorySlot.MoveBetweenSlots(hoverSlot, MouseInventorySlot.Amount);
                 }
             }
         }
@@ -63,10 +61,12 @@ namespace Axvemi.Inventories.Samples
         /// </summary>
         /// <param name="position">Position in the canvas</param>
         /// <returns>Inventory Slot</returns>
-        private InventorySlot<Item> GetSlotAtMousePosition(Vector2 position)
+        private static InventorySlot<Item> GetSlotAtMousePosition(Vector2 position)
         {
-            PointerEventData pointerEventData = new PointerEventData(null);
-            pointerEventData.position = position;
+            PointerEventData pointerEventData = new PointerEventData(null)
+            {
+                position = position
+            };
 
             List<RaycastResult> raycastResults = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointerEventData, raycastResults);

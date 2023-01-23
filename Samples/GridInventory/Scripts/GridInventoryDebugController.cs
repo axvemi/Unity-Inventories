@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Axvemi.Inventories.Samples
 {
-    public class GridInventoryDebugCotroller : MonoBehaviour
+    public class GridInventoryDebugController : MonoBehaviour
     {
         [SerializeField] private GridInventorySampleManager inventorySampleManager;
 

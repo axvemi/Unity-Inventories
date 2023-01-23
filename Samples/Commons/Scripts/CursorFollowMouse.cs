@@ -4,35 +4,43 @@ namespace Axvemi.Inventories.Samples
 {
     public class CursorFollowMouse : MonoBehaviour
     {
-        [SerializeField] private Canvas canvas = null;
-        private RectTransform canvasRectTransform = null;
-        private RectTransform rectTransform = null;
+        [SerializeField] private Canvas canvas;
 
+        private RectTransform canvasRectTransform;
+        private RectTransform rectTransform;
 
-        private void Awake() {
+        private void Awake()
+        {
             rectTransform = GetComponent<RectTransform>();
             canvasRectTransform = canvas.GetComponent<RectTransform>();
         }
-        private void OnEnable() {
+
+        private void OnEnable()
+        {
             Vector2 startingPosition = rectTransform.anchoredPosition;
         }
 
-        private void Update() {
-            if(canvas.renderMode == RenderMode.ScreenSpaceCamera){
-                FollowMouseOnCameraSpace();
-            }
-            else if(canvas.renderMode == RenderMode.ScreenSpaceOverlay){
-                FollowMouseOnOverlaySpace();
+        private void Update()
+        {
+            switch (canvas.renderMode)
+            {
+                case RenderMode.ScreenSpaceCamera:
+                    FollowMouseOnCameraSpace();
+                    break;
+                case RenderMode.ScreenSpaceOverlay:
+                    FollowMouseOnOverlaySpace();
+                    break;
             }
         }
 
-        private void FollowMouseOnOverlaySpace(){
+        private void FollowMouseOnOverlaySpace()
+        {
             rectTransform.anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
         }
 
-        private void FollowMouseOnCameraSpace(){
-            Vector2 canvasPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, Input.mousePosition, canvas.worldCamera , out canvasPoint);
+        private void FollowMouseOnCameraSpace()
+        {
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, Input.mousePosition, canvas.worldCamera, out Vector2 canvasPoint);
             rectTransform.anchoredPosition = canvasPoint;
         }
     }

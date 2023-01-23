@@ -10,10 +10,10 @@ namespace Axvemi.Inventories.Samples
     public class GridInventorySlotUIController : MonoBehaviour
     {
         [Header("UI")]
-        [SerializeField] private Image image = null;
-        [SerializeField] private TextMeshProUGUI ammountText = null;
+        [SerializeField] private Image image;
+        [SerializeField] private TextMeshProUGUI amountText;
 
-        private InventorySlot<Item> slot = null;
+        private InventorySlot<Item> slot;
 
         public InventorySlot<Item> Slot
         {
@@ -34,13 +34,13 @@ namespace Axvemi.Inventories.Samples
         private void ShowSlot(InventorySlot<Item> slot) {
             if(slot.Item == null) {
                 image.gameObject.SetActive(false);
-                ammountText.gameObject.SetActive(false);
+                amountText.gameObject.SetActive(false);
             }
             else {
                 image.gameObject.SetActive(true);
                 image.sprite = slot.Item.ItemScriptableObject.Sprite;
-                ammountText.gameObject.SetActive(true);
-                ammountText.SetText(slot.Amount.ToString());
+                amountText.gameObject.SetActive(true);
+                amountText.SetText(slot.Amount.ToString());
             }
         }
 

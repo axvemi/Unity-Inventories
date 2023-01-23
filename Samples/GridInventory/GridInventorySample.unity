@@ -2584,14 +2584,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1492870038}
-        m_TargetAssemblyTypeName: Axvemi.Inventories.Samples.GridInventoryDebugCotroller,
-          Assembly-CSharp
+        m_TargetAssemblyTypeName: Axvemi.Inventories.Samples.GridInventoryDebugController,
+          Axvemi.Inventories.Samples.GridInventory
         m_MethodName: AddItem
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: c76aec86341707542b459fb66d502bb3, type: 2}
           m_ObjectArgumentAssemblyTypeName: Axvemi.Inventories.Samples.ItemScriptableObject,
-            Assembly-CSharp
+            Axvemi.Inventories.Samples.Commons
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3190,14 +3190,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1492870038}
-        m_TargetAssemblyTypeName: Axvemi.Inventories.Samples.GridInventoryDebugCotroller,
-          Assembly-CSharp
+        m_TargetAssemblyTypeName: Axvemi.Inventories.Samples.GridInventoryDebugController,
+          Axvemi.Inventories.Samples.GridInventory
         m_MethodName: AddItem
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 7439627822996d744ace72dacecd31e8, type: 2}
           m_ObjectArgumentAssemblyTypeName: Axvemi.Inventories.Samples.ItemScriptableObject,
-            Assembly-CSharp
+            Axvemi.Inventories.Samples.Commons
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3833,14 +3833,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1492870038}
-        m_TargetAssemblyTypeName: Axvemi.Inventories.Samples.GridInventoryDebugCotroller,
-          Assembly-CSharp
+        m_TargetAssemblyTypeName: Axvemi.Inventories.Samples.GridInventoryDebugController,
+          Axvemi.Inventories.Samples.GridInventory
         m_MethodName: AddItem
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: a28891c36371b59489870c0bd9d01f16, type: 2}
           m_ObjectArgumentAssemblyTypeName: Axvemi.Inventories.Samples.ItemScriptableObject,
-            Assembly-CSharp
+            Axvemi.Inventories.Samples.Commons
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4172,14 +4172,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1492870038}
-        m_TargetAssemblyTypeName: Axvemi.Inventories.Samples.GridInventoryDebugCotroller,
-          Assembly-CSharp
+        m_TargetAssemblyTypeName: Axvemi.Inventories.Samples.GridInventoryDebugController,
+          Axvemi.Inventories.Samples.GridInventory
         m_MethodName: AddItem
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 0c3e2e450c436c74cb409a105c2e819b, type: 2}
           m_ObjectArgumentAssemblyTypeName: Axvemi.Inventories.Samples.ItemScriptableObject,
-            Assembly-CSharp
+            Axvemi.Inventories.Samples.Commons
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4615,14 +4615,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1492870038}
-        m_TargetAssemblyTypeName: Axvemi.Inventories.Samples.GridInventoryDebugCotroller,
-          Assembly-CSharp
+        m_TargetAssemblyTypeName: Axvemi.Inventories.Samples.GridInventoryDebugController,
+          Axvemi.Inventories.Samples.GridInventory
         m_MethodName: AddItem
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: dbdb238fd08e4d14783c78301a634003, type: 2}
           m_ObjectArgumentAssemblyTypeName: Axvemi.Inventories.Samples.ItemScriptableObject,
-            Assembly-CSharp
+            Axvemi.Inventories.Samples.Commons
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

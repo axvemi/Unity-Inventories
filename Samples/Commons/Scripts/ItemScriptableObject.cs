@@ -9,8 +9,10 @@ namespace Axvemi.Inventories.Samples
     public class ItemScriptableObject : ScriptableObject
     {
         public string Id;
+        
         [Header("Data")]
         public int MaxAmount;
+        
         [Header("Visuals")]
         public Sprite Sprite;
     }

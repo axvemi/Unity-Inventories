@@ -303,4 +303,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 2111818670889368079}
-  ammountText: {fileID: 345922569462310740}
+  amountText: {fileID: 345922569462310740}

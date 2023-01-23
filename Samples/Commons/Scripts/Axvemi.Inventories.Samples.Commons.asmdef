@@ -1,0 +1,16 @@
+{
+    "name": "Axvemi.Inventories.Samples.Commons",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e6c1abcc733abab468e34c3b315e195f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

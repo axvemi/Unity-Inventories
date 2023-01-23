@@ -5,21 +5,17 @@ namespace Axvemi.Inventories.Samples
     /// </summary>
     public class Item : IInventoryItem
     {
-        private ItemScriptableObject itemScriptableObject;
-
-        public Item(ItemScriptableObject itemScriptableObject) 
+        public ItemScriptableObject ItemScriptableObject { get; }
+        public Item(ItemScriptableObject itemScriptableObject)
         {
-            this.itemScriptableObject = itemScriptableObject;
+            this.ItemScriptableObject = itemScriptableObject;
         }
 
-        public ItemScriptableObject ItemScriptableObject { get => itemScriptableObject; set => itemScriptableObject = value; }
-
-        public string GetId() => this.itemScriptableObject.Id;
+        public string GetId() => this.ItemScriptableObject.Id;
 
         public int GetMaxStackAmount()
         {
-            return itemScriptableObject.MaxAmount;
+            return ItemScriptableObject.MaxAmount;
         }
     }
 }
-

@@ -8,24 +8,25 @@ namespace Axvemi.Inventories.Samples
     /// </summary>
     public class GridInventoryUIController : MonoBehaviour
     {
-        [SerializeField] private GameObject inventorySlotPrefab = null;
+        [SerializeField] private GameObject inventorySlotPrefab;
+
         [Header("UI")]
-        [SerializeField] private Transform slotsContainer = null;
+        [SerializeField] private Transform slotsContainer;
 
-        private Dictionary<InventorySlot<Item>, GameObject> inventorySlotGameObjectDictionary = new Dictionary<InventorySlot<Item>, GameObject>();
+        private readonly Dictionary<InventorySlot<Item>, GameObject> inventorySlotGameObjectDictionary = new();
 
-        private Inventory<Item> inventory = null;
+        public Inventory<Item> Inventory { get; set; }
 
-        public Inventory<Item> Inventory { get => inventory; set => inventory = value; }
-
-        private void Start() {
-            inventory.OnSlotAdded += OnSlotAdded;
-            inventory.OnSlotRemoved += OnSlotRemoved; ;
+        private void Start()
+        {
+            Inventory.OnSlotAdded += OnSlotAdded;
+            Inventory.OnSlotRemoved += OnSlotRemoved;
+            ;
 
             //Create an slot for each inventory slot
-            for (int i = 0; i < inventory.Slots.Count; i++)
+            foreach (InventorySlot<Item> slot in Inventory.Slots)
             {
-                CreateSlotGameObject(inventory.Slots[i]);
+                CreateSlotGameObject(slot);
             }
         }
 

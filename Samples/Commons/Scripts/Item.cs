@@ -3,7 +3,7 @@ namespace Axvemi.Inventories.Samples
     /// <summary>
     /// Example class of an item representation
     /// </summary>
-    public class Item : IInventoryItem<Item>
+    public class Item : IInventoryItem
     {
         private ItemScriptableObject itemScriptableObject;
 

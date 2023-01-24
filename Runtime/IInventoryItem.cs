@@ -14,21 +14,19 @@ namespace Axvemi.Inventories
 
         /// <summary>
         /// Max stack size per inventory slot
-        /// Set 0 to allow an infinite amount
         /// </summary>
         /// <returns></returns>
         int GetMaxStackAmount();
 
         /// <summary>
-        /// Compares the identifier of both items. If it's the same identifier, it's the same object
+        /// Condition to check whether to IInventoryItems are considered equal
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public bool IsSameItem(IInventoryItem item) => this.GetId().Equals(item.GetId());
+        public bool IsSameItem(IInventoryItem item) => GetId().Equals(item.GetId());
 
         /// <summary>
         /// Whether it allows stacking an infinite amount in the same slot.
-        /// If the max size is 0, allow it
         /// </summary>
         /// <returns></returns>
         bool IsInfiniteStack() => GetMaxStackAmount() == 0;

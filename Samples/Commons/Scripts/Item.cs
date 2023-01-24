@@ -1,3 +1,5 @@
+using System;
+
 namespace Axvemi.Inventories.Samples
 {
     /// <summary>
@@ -6,8 +8,14 @@ namespace Axvemi.Inventories.Samples
     public class Item : IInventoryItem
     {
         public ItemScriptableObject ItemScriptableObject { get; }
+
         public Item(ItemScriptableObject itemScriptableObject)
         {
+            if (itemScriptableObject == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             this.ItemScriptableObject = itemScriptableObject;
         }
 
@@ -16,6 +24,11 @@ namespace Axvemi.Inventories.Samples
         public int GetMaxStackAmount()
         {
             return ItemScriptableObject.MaxAmount;
+        }
+
+        public override string ToString()
+        {
+            return "Id: " + ItemScriptableObject.Id;
         }
     }
 }

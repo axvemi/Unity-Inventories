@@ -4,11 +4,6 @@ using System.Linq;
 
 namespace Axvemi.Inventories
 {
-    public class FailedToFindSlotException : Exception
-    {
-    }
-
-
     /// <summary>
     /// Representation of an inventory.
     /// </summary>
@@ -17,7 +12,7 @@ namespace Axvemi.Inventories
         /// <summary>
         /// Slots of the inventory
         /// </summary>
-        public List<InventorySlot<T>> Slots { get; set; } = new();
+        public List<InventorySlot<T>> Slots { get; } = new();
 
         /// <summary>
         /// A new slot has been added to the inventory
@@ -35,6 +30,11 @@ namespace Axvemi.Inventories
 
         public Inventory(int startingSlotSize)
         {
+            if (startingSlotSize < 0)
+            {
+                throw new ArgumentException(nameof(startingSlotSize) + " can not be less than 0!");
+            }
+
             for (int i = 0; i < startingSlotSize; i++)
             {
                 CreateNewSlot();
@@ -83,11 +83,24 @@ namespace Axvemi.Inventories
         /// <param name="amount">Amount to add</param>
         public void AddItem(T item, int amount = 1)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            if (amount <= 0)
+            {
+                throw new ArgumentException("Amount can not be less or equal to 0!");
+            }
+
+            if (GetRemainingSpaceForItem(item) < amount)
+            {
+                throw new FailedToStoreException("There is not enough space in the inventory to store that amount");
+            }
+
             for (int i = 0; i < amount; i++)
             {
-                InventorySlot<T> slot = GetFreeInventorySlotForItemId(item);
-                //TODO: Add only if we have enough space for everything. Not half of it and then exception
-
+                InventorySlot<T> slot = FindFirstFreeInventorySlotForItem(item);
                 slot.StoreItem(item);
             }
         }
@@ -96,32 +109,53 @@ namespace Axvemi.Inventories
         /// Removes X amount items that have that identifier.
         /// Removes the firsts found
         /// </summary>
-        /// <param name="itemId">Items with the id to remove</param>
+        /// <param name="item">Item to remove</param>
         /// <param name="amount">Amount to remove</param>
-        public void RemoveItem(string itemId, int amount = 1)
+        public void RemoveItem(T item, int amount = 1)
         {
-            if (GetAmountOfItem(itemId) < amount)
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            if (amount <= 0)
+            {
+                throw new ArgumentException("Amount can not be less or equal to 0!");
+            }
+
+            if (GetAmountOfItem(item) < amount)
             {
                 throw new Exception("Not enough amount");
             }
 
             for (int i = 0; i < amount; i++)
             {
-                InventorySlot<T> slot = GetInventorySlotsWithItemId(itemId)[0];
+                InventorySlot<T> slot = FindInventorySlotListWithItem(item)[0];
                 slot.RemoveItem();
             }
         }
 
-        /// <summary>
-        /// Look how many of an item we have in the inventory
-        /// </summary>
-        /// <param name="itemId">Id to look for</param>
-        /// <returns>Amount of that item in the inventory</returns>
-        public int GetAmountOfItem(string itemId)
+        public void Clear()
         {
-            List<InventorySlot<T>> slotsWithItemList = GetInventorySlotsWithItemId(itemId);
-            return slotsWithItemList.Sum(inventorySlot => inventorySlot.Amount);
+            foreach (InventorySlot<T> slot in Slots)
+            {
+                slot.Inventory = null;
+            }
+            Slots.Clear();
         }
+
+        public override string ToString()
+        {
+            string slotListContent = "";
+            for (int i = 0; i < Slots.Count; i++)
+            {
+                slotListContent += "Slot " + i + ": {" + Slots[i] + "}" + (i == Slots.Count - 1 ? "" : Environment.NewLine);
+            }
+
+            return "Slots: {" + slotListContent + "}";
+        }
+
+        //QUERY
 
         /// <summary>
         /// Gets the first slot that has free space.
@@ -131,39 +165,74 @@ namespace Axvemi.Inventories
         /// </summary>
         /// <param name="item">Item to store</param>
         /// <returns>Inventory slot that meets the parameters. Null if none</returns>
-        public InventorySlot<T> GetFreeInventorySlotForItemId(T item)
+        public InventorySlot<T> FindFirstFreeInventorySlotForItem(T item)
         {
             InventorySlot<T> slot;
             //Unlimited amount. Look for a slot that already contains this item
             if (item.IsInfiniteStack())
             {
-                slot = Slots.Find(s => (s.Item != null) && (s.Item.IsSameItem(item)));
+                slot = FindSlotWithItem(item);
             }
             //Limited amount. Slot with item and free space
             else
             {
-                slot = Slots.Find(s => (s.Item != null) && (s.Item.IsSameItem(item)) && (s.Amount < item.GetMaxStackAmount()));
+                slot = FindSlotWithItemAndFreeSpace(item);
             }
 
             //Still null, look for an empty slot
-            slot ??= Slots.Find(s => s.Item == null);
+            slot ??= FindEmptySlot();
 
             if (slot == null)
             {
                 throw new FailedToFindSlotException();
             }
-            
+
             return slot;
         }
 
-        /// <summary>
-        /// Get all the slots that have an item with the ID = "itemId"
-        /// </summary>
-        /// <param name="itemId">Id of the item to look for</param>
-        /// <returns>All the slots that contain at least one item with "itemId". An empty list if none</returns>
-        public List<InventorySlot<T>> GetInventorySlotsWithItemId(string itemId)
+        public InventorySlot<T> FindEmptySlot()
         {
-            return this.Slots.Where(slot => slot.Item.GetId().Equals(itemId)).ToList();
+            return Slots.Find(s => s.Item == null);
+        }
+
+        public InventorySlot<T> FindSlotWithItem(T item)
+        {
+            return Slots.Find(s => (s.Item != null) && (s.Item.IsSameItem(item)));
+        }
+
+        public InventorySlot<T> FindSlotWithItemAndFreeSpace(T item)
+        {
+            return Slots.Find(s => (s.Item != null) && (s.Item.IsSameItem(item)) && (s.Item.IsInfiniteStack() || s.Amount < item.GetMaxStackAmount()));
+        }
+
+        public List<InventorySlot<T>> FindEmptySlotList()
+        {
+            return this.Slots.Where(slot => slot.Item == null).ToList();
+        }
+
+        public List<InventorySlot<T>> FindInventorySlotListWithItem(T item)
+        {
+            return this.Slots.Where(slot => (slot.Item != null) && (slot.Item.IsSameItem(item))).ToList();
+        }
+
+        public int GetRemainingSpaceForItem(T item)
+        {
+            if (item.IsInfiniteStack()) return int.MaxValue;
+
+            List<InventorySlot<T>> emptySlots = FindEmptySlotList();
+            List<InventorySlot<T>> slotsWithItem = FindInventorySlotListWithItem(item);
+
+            int remainingSpace = 0;
+            remainingSpace += emptySlots.Count * item.GetMaxStackAmount();
+            remainingSpace += slotsWithItem.Sum(slot => item.GetMaxStackAmount() - slot.Amount);
+
+            return remainingSpace;
+        }
+
+        public int GetAmountOfItem(T item)
+        {
+            List<InventorySlot<T>> slotsWithItemList = FindInventorySlotListWithItem(item);
+            return slotsWithItemList.Sum(inventorySlot => inventorySlot.Amount);
         }
     }
 }

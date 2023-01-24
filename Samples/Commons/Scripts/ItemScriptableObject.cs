@@ -15,5 +15,10 @@ namespace Axvemi.Inventories.Samples
         
         [Header("Visuals")]
         public Sprite Sprite;
+
+        public override string ToString()
+        {
+            return "Id: " + Id;
+        }
     }
 }

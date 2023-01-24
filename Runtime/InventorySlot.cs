@@ -3,22 +3,12 @@ using System;
 namespace Axvemi.Inventories
 {
     /// <summary>
-    /// Exception thrown when its not possible to store an item in the slot
-    /// </summary>
-    public class FailedToStoreItemException : Exception
-    {
-    }
-
-    public class FailedToMoveItemException : Exception
-    {
-    }
-
-    /// <summary>
     /// Slot of the inventory. Contains a T, or nothing (null)
     /// </summary>
     public class InventorySlot<T> where T : IInventoryItem
     {
-        private T item;
+        public Inventory<T> Inventory { get; set; }
+        public T Item { get; private set; }
         private int amount;
 
         /// <summary>
@@ -35,40 +25,55 @@ namespace Axvemi.Inventories
             this.Inventory = inventory;
         }
 
-        public Inventory<T> Inventory { get; set; }
-
-        public T Item
-        {
-            get => this.item;
-            set
-            {
-                this.item = value;
-                OnSlotUpdated?.Invoke(this);
-            }
-        }
-
         public int Amount
         {
             get => this.amount;
             set
             {
+                if (Item == null)
+                {
+                    throw new FailedToStoreException("Can not set an amount when the item stored is null");
+                }
+
+                if (value < 0)
+                {
+                    throw new ArgumentException("The amount can not be less than 0");
+                }
+
+                if (!Item.IsInfiniteStack() && value > Item.GetMaxStackAmount())
+                {
+                    throw new FailedToStoreException("Trying to store an amount bigger than the stack size");
+                }
+
                 this.amount = value;
+
+                if (amount == 0)
+                {
+                    Clear();
+                    return;
+                }
+
                 OnSlotUpdated?.Invoke(this);
             }
         }
-
+        
         /// <summary>
         /// If they are the same object, move all the possible amount from "originSlot" to "targetSlot".
-        /// If they are two different slots, swap the contents
+        /// If they are two different slots, swap the contents. Transfer amount will not be used
         /// </summary>
         /// <param name="originSlot">Origin slot</param>
         /// <param name="targetSlot">Target slot</param>
         /// <param name="transferAmount">Amount to transfer</param>
-        public static void MoveBetweenSlots(InventorySlot<T> originSlot, InventorySlot<T> targetSlot, int transferAmount)
+        public static void MoveBetweenSlots(InventorySlot<T> originSlot, InventorySlot<T> targetSlot, int transferAmount = 1)
         {
-            if (originSlot == null || targetSlot == null)
+            if (originSlot == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(originSlot), "Can't transfer from a null slot");
+            }
+
+            if (targetSlot == null)
+            {
+                throw new ArgumentNullException(nameof(targetSlot), "Can't transfer to a null slot");
             }
 
             if (transferAmount > originSlot.amount)
@@ -76,39 +81,35 @@ namespace Axvemi.Inventories
                 throw new ArgumentException("You can't transfer an amount bigger than the one existing in the origin slot");
             }
 
-            //Move all possible amount from origin to target
-            if (targetSlot.item == null || originSlot.item.IsSameItem(targetSlot.item))
+            //Move all POSSIBLE amount from origin to target
+            if (targetSlot.Item == null || originSlot.Item.IsSameItem(targetSlot.Item))
             {
                 //While there is remaining content in the origin, and remaining (or infinite) space on target
-                while (transferAmount > 0 && (targetSlot.amount < originSlot.item.GetMaxStackAmount() || originSlot.item.IsInfiniteStack()))
+                while (transferAmount > 0 && (targetSlot.amount < originSlot.Item.GetMaxStackAmount() || originSlot.Item.IsInfiniteStack()))
                 {
-                    targetSlot.StoreItem(originSlot.item);
+                    targetSlot.StoreItem(originSlot.Item);
                     originSlot.RemoveItem();
                     transferAmount--;
                 }
             }
             //Swap slots
-            else if (transferAmount == originSlot.amount)
-            {
-                (originSlot.amount, targetSlot.amount) = (targetSlot.amount, originSlot.amount);
-                (originSlot.item, targetSlot.item) = (targetSlot.item, originSlot.item);
-            }
             else
             {
-                throw new FailedToMoveItemException();
+                (originSlot.amount, targetSlot.amount) = (targetSlot.amount, originSlot.amount);
+                (originSlot.Item, targetSlot.Item) = (targetSlot.Item, originSlot.Item);
             }
 
             originSlot.OnSlotUpdated?.Invoke(originSlot);
             targetSlot.OnSlotUpdated?.Invoke(targetSlot);
         }
-        
+
         /// <summary>
         /// If they are the same object, move all the possible amount from "this slot" to "targetSlot".
-        /// If they are two different slots, swap the contents
+        /// If they are two different slots, swap the contents. Transfer amount will not be used
         /// </summary>
         /// <param name="targetSlot">Target slot</param>
         /// <param name="transferAmount">Amount to transfer</param>
-        public void MoveBetweenSlots(InventorySlot<T> targetSlot, int transferAmount)
+        public void MoveBetweenSlots(InventorySlot<T> targetSlot, int transferAmount = 1)
         {
             MoveBetweenSlots(this, targetSlot, transferAmount);
         }
@@ -117,18 +118,31 @@ namespace Axvemi.Inventories
         /// Adds the item to this slot
         /// If the item is null set reset slot
         /// </summary>
-        /// <exception cref="FailedToStoreItemException">If its not the correct Item to add this exception gets raised</exception>
+        /// <exception cref="FailedToStoreException">If its not the correct Item to add this exception gets raised</exception>
         public void StoreItem(T item, int amount = 1)
         {
-            //If the item is not the same, or item is not null (reset) throw exception
-            //If item is null, the slot will set it as null, and set the amount to 0
-            if (this.Item != null && item != null && !this.item.IsSameItem(item))
+            if (item == null)
             {
-                throw new FailedToStoreItemException();
+                throw new ArgumentException("Can't store a null item!");
             }
 
-            this.item = item;
-            this.amount = item == null ? 0 : this.Amount + amount;
+            if (amount <= 0)
+            {
+                throw new ArgumentException("Amount can't be less or equal to 0!");
+            }
+
+            if (amount + this.Amount > item.GetMaxStackAmount() && !item.IsInfiniteStack())
+            {
+                throw new ArgumentException("Can't store an amount bigger than the stack size!");
+            }
+
+            if (this.Item != null && !this.Item.IsSameItem(item))
+            {
+                throw new FailedToStoreException("You are trying to store a different item on an occupied slot!");
+            }
+
+            this.Item = item;
+            this.Amount += amount;
             OnSlotUpdated?.Invoke(this);
         }
 
@@ -146,10 +160,26 @@ namespace Axvemi.Inventories
             this.amount -= amount;
             if (this.amount == 0)
             {
-                this.item = default;
+                Clear();
+                return;
             }
 
             OnSlotUpdated?.Invoke(this);
+        }
+
+        /// <summary>
+        /// Clears the content of the slot
+        /// </summary>
+        public void Clear()
+        {
+            this.Item = default;
+            this.amount = 0;
+            OnSlotUpdated?.Invoke(this);
+        }
+
+        public override string ToString()
+        {
+            return $"Item: {Item}; Amount: {Amount}";
         }
     }
 }

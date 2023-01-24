@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1db32e970c584f1459ebef0110e8475a, type: 3}
-  m_Name: RedPotionInventoryItem
+  m_Name: StackAmountInventoryItem
   m_EditorClassIdentifier: 
-  Id: red-potion
-  MaxAmount: 5
-  Sprite: {fileID: 21300000, guid: cd75e2a7284857749af3062269d60598, type: 3}
+  Id: stack-amount
+  MaxAmount: 10
+  Sprite: {fileID: 0}

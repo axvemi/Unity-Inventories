@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BluePotionInventoryItem
   m_EditorClassIdentifier: 
   Id: blue-potion
-  MaxAmount: 0
+  MaxAmount: 5
   Sprite: {fileID: 21300000, guid: f0b40fc38a4e11049aa86f795c228416, type: 3}

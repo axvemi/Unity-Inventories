@@ -11,7 +11,7 @@ namespace Axvemi.Inventories.Samples
 
         public void ClearCursor()
         {
-            cursorController.MouseInventorySlot.StoreItem(null);
+            cursorController.MouseInventorySlot.Clear();
         }
     }
 }

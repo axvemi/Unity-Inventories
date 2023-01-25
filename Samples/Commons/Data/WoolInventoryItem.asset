@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: wool
   MaxAmount: 0
-  Sprite: {fileID: 21300000, guid: ebce2e7ea3fa18d48b5eaaabad3a7033, type: 3}
+  Sprite: {fileID: 21300000, guid: ea32520de8c8e394984c630ac0b287de, type: 3}

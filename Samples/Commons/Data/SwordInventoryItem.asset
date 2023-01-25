@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: sword
   MaxAmount: 1
-  Sprite: {fileID: 21300000, guid: 186545b7990195c4383e0486ff8554a5, type: 3}
+  Sprite: {fileID: 21300000, guid: b82228da51a29cd4cb52c8f0a53fe9f3, type: 3}

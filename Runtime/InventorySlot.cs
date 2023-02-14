@@ -7,15 +7,16 @@ namespace Axvemi.Inventories
     /// </summary>
     public class InventorySlot<T> where T : IInventoryItem
     {
-        public Inventory<T> Inventory { get; set; }
-        public T Item { get; private set; }
-        private int amount;
-
         /// <summary>
         /// Called when the item type, or the amount have been modified
         /// </summary>
         public event Action<InventorySlot<T>> OnSlotUpdated;
+        
+        public Inventory<T> Inventory { get; set; }
+        public T Item { get; private set; }
 
+        private int amount;
+        
         public InventorySlot()
         {
         }

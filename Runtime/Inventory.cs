@@ -141,6 +141,7 @@ namespace Axvemi.Inventories
             {
                 slot.Inventory = null;
             }
+
             Slots.Clear();
         }
 

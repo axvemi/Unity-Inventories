@@ -208,12 +208,12 @@ namespace Axvemi.Inventories
 
         public List<InventorySlot<T>> FindEmptySlotList()
         {
-            return this.Slots.Where(slot => slot.Item == null).ToList();
+            return Slots.Where(slot => slot.Item == null).ToList();
         }
 
         public List<InventorySlot<T>> FindInventorySlotListWithItem(T item)
         {
-            return this.Slots.Where(slot => (slot.Item != null) && (slot.Item.IsSameItem(item))).ToList();
+            return Slots.Where(slot => (slot.Item != null) && (slot.Item.IsSameItem(item))).ToList();
         }
 
         public int GetRemainingSpaceForItem(T item)

@@ -6,18 +6,18 @@ namespace Axvemi.Inventories.Samples
     {
         [SerializeField] private Canvas canvas;
 
-        private RectTransform canvasRectTransform;
-        private RectTransform rectTransform;
+        private RectTransform _canvasRectTransform;
+        private RectTransform _rectTransform;
 
         private void Awake()
         {
-            rectTransform = GetComponent<RectTransform>();
-            canvasRectTransform = canvas.GetComponent<RectTransform>();
+            _rectTransform = GetComponent<RectTransform>();
+            _canvasRectTransform = canvas.GetComponent<RectTransform>();
         }
 
         private void OnEnable()
         {
-            Vector2 startingPosition = rectTransform.anchoredPosition;
+            Vector2 startingPosition = _rectTransform.anchoredPosition;
         }
 
         private void Update()
@@ -35,13 +35,13 @@ namespace Axvemi.Inventories.Samples
 
         private void FollowMouseOnOverlaySpace()
         {
-            rectTransform.anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
+            _rectTransform.anchoredPosition = Input.mousePosition / _canvasRectTransform.localScale.x;
         }
 
         private void FollowMouseOnCameraSpace()
         {
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, Input.mousePosition, canvas.worldCamera, out Vector2 canvasPoint);
-            rectTransform.anchoredPosition = canvasPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvasRectTransform, Input.mousePosition, canvas.worldCamera, out Vector2 canvasPoint);
+            _rectTransform.anchoredPosition = canvasPoint;
         }
     }
 }

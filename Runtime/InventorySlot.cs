@@ -15,7 +15,7 @@ namespace Axvemi.Inventories
         public Inventory<T> Inventory { get; set; }
         public T Item { get; private set; }
 
-        private int amount;
+        private int _amount;
         
         public InventorySlot()
         {
@@ -23,12 +23,12 @@ namespace Axvemi.Inventories
 
         public InventorySlot(Inventory<T> inventory)
         {
-            this.Inventory = inventory;
+            Inventory = inventory;
         }
 
         public int Amount
         {
-            get => this.amount;
+            get => _amount;
             set
             {
                 if (Item == null)
@@ -46,9 +46,9 @@ namespace Axvemi.Inventories
                     throw new FailedToStoreException("Trying to store an amount bigger than the stack size");
                 }
 
-                this.amount = value;
+                _amount = value;
 
-                if (amount == 0)
+                if (_amount == 0)
                 {
                     Clear();
                     return;
@@ -77,7 +77,7 @@ namespace Axvemi.Inventories
                 throw new ArgumentNullException(nameof(targetSlot), "Can't transfer to a null slot");
             }
 
-            if (transferAmount > originSlot.amount)
+            if (transferAmount > originSlot._amount)
             {
                 throw new ArgumentException("You can't transfer an amount bigger than the one existing in the origin slot");
             }
@@ -86,7 +86,7 @@ namespace Axvemi.Inventories
             if (targetSlot.Item == null || originSlot.Item.IsSameItem(targetSlot.Item))
             {
                 //While there is remaining content in the origin, and remaining (or infinite) space on target
-                while (transferAmount > 0 && (targetSlot.amount < originSlot.Item.GetMaxStackAmount() || originSlot.Item.IsInfiniteStack()))
+                while (transferAmount > 0 && (targetSlot._amount < originSlot.Item.GetMaxStackAmount() || originSlot.Item.IsInfiniteStack()))
                 {
                     targetSlot.StoreItem(originSlot.Item);
                     originSlot.RemoveItem();
@@ -96,7 +96,7 @@ namespace Axvemi.Inventories
             //Swap slots
             else
             {
-                (originSlot.amount, targetSlot.amount) = (targetSlot.amount, originSlot.amount);
+                (originSlot._amount, targetSlot._amount) = (targetSlot._amount, originSlot._amount);
                 (originSlot.Item, targetSlot.Item) = (targetSlot.Item, originSlot.Item);
             }
 
@@ -132,18 +132,18 @@ namespace Axvemi.Inventories
                 throw new ArgumentException("Amount can't be less or equal to 0!");
             }
 
-            if (amount + this.Amount > item.GetMaxStackAmount() && !item.IsInfiniteStack())
+            if (amount + Amount > item.GetMaxStackAmount() && !item.IsInfiniteStack())
             {
                 throw new ArgumentException("Can't store an amount bigger than the stack size!");
             }
 
-            if (this.Item != null && !this.Item.IsSameItem(item))
+            if (Item != null && !Item.IsSameItem(item))
             {
                 throw new FailedToStoreException("You are trying to store a different item on an occupied slot!");
             }
 
-            this.Item = item;
-            this.Amount += amount;
+            Item = item;
+            Amount += amount;
             OnSlotUpdated?.Invoke(this);
         }
 
@@ -153,13 +153,13 @@ namespace Axvemi.Inventories
         /// <param name="amount">Amount to remove. Can't be larger than the current slot amount</param>
         public void RemoveItem(int amount = 1)
         {
-            if (amount <= 0 || amount > this.amount)
+            if (amount <= 0 || amount > _amount)
             {
                 throw new ArgumentException("Amount must be larger than 0, and less or equal to the current amount stored");
             }
 
-            this.amount -= amount;
-            if (this.amount == 0)
+            _amount -= amount;
+            if (_amount == 0)
             {
                 Clear();
                 return;
@@ -173,8 +173,8 @@ namespace Axvemi.Inventories
         /// </summary>
         public void Clear()
         {
-            this.Item = default;
-            this.amount = 0;
+            Item = default;
+            _amount = 0;
             OnSlotUpdated?.Invoke(this);
         }
 

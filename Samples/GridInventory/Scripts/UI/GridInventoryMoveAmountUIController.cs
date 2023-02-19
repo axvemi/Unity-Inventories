@@ -13,34 +13,34 @@ namespace Axvemi.Inventories.Samples
         [SerializeField] private Slider slider;
         [SerializeField] private TMP_InputField inputField;
 
-        private InventorySlot<Item> originSlot;
-        private InventorySlot<Item> targetSlot;
+        private InventorySlot<Item> _originSlot;
+        private InventorySlot<Item> _targetSlot;
 
-        private int amountToTransfer;
+        private int _amountToTransfer;
 
         public void OpenMoveAmount(InventorySlot<Item> origin, InventorySlot<Item> target)
         {
-            this.gameObject.SetActive(true);
-            this.originSlot = origin;
-            this.targetSlot = target;
+            gameObject.SetActive(true);
+            _originSlot = origin;
+            _targetSlot = target;
 
-            amountToTransfer = 1;
+            _amountToTransfer = 1;
             slider.minValue = 1;
             slider.maxValue = origin.Amount;
-            inputField.text = amountToTransfer.ToString();
+            inputField.text = _amountToTransfer.ToString();
         }
 
         public void OnInputFieldUpdated(string text)
         {
             int value = int.Parse(text);
-            amountToTransfer = Mathf.Clamp(value, 0, originSlot.Amount);
-            slider.value = amountToTransfer;
+            _amountToTransfer = Mathf.Clamp(value, 0, _originSlot.Amount);
+            slider.value = _amountToTransfer;
         }
 
         public void OnSliderUpdated(float value)
         {
-            amountToTransfer = (int)value;
-            inputField.text = amountToTransfer.ToString();
+            _amountToTransfer = (int)value;
+            inputField.text = _amountToTransfer.ToString();
         }
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace Axvemi.Inventories.Samples
         /// </summary>
         public void DoTransferItems()
         {
-            originSlot.MoveBetweenSlots(targetSlot, amountToTransfer);
-            this.gameObject.SetActive(false);
+            _originSlot.MoveBetweenSlots(_targetSlot, _amountToTransfer);
+            gameObject.SetActive(false);
         }
     }
 }

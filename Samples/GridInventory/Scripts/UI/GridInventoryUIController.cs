@@ -13,7 +13,7 @@ namespace Axvemi.Inventories.Samples
         [Header("UI")]
         [SerializeField] private Transform slotsContainer;
 
-        private readonly Dictionary<InventorySlot<Item>, GameObject> inventorySlotGameObjectDictionary = new();
+        private readonly Dictionary<InventorySlot<Item>, GameObject> _inventorySlotGameObjectDictionary = new();
 
         public Inventory<Item> Inventory { get; set; }
 
@@ -32,8 +32,8 @@ namespace Axvemi.Inventories.Samples
 
         private void OnSlotRemoved(InventorySlot<Item> slot)
         {
-            Destroy(inventorySlotGameObjectDictionary[slot]);
-            inventorySlotGameObjectDictionary.Remove(slot);
+            Destroy(_inventorySlotGameObjectDictionary[slot]);
+            _inventorySlotGameObjectDictionary.Remove(slot);
         }
 
         private void OnSlotAdded(InventorySlot<Item> slot)
@@ -46,7 +46,7 @@ namespace Axvemi.Inventories.Samples
             GridInventorySlotUIController inventorySlotUIInstance = Instantiate(inventorySlotPrefab, slotsContainer).GetComponent<GridInventorySlotUIController>();
             inventorySlotUIInstance.Slot = slot;
 
-            inventorySlotGameObjectDictionary.Add(slot, inventorySlotUIInstance.gameObject);
+            _inventorySlotGameObjectDictionary.Add(slot, inventorySlotUIInstance.gameObject);
         }
     }
 }

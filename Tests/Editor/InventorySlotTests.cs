@@ -134,7 +134,7 @@ public class InventorySlotTests
         }
         else
         {
-            int expectedAmount = amount - (itemScriptableObject.MaxAmount - amount2);
+            int expectedAmount = amount - (itemScriptableObject.maxAmount - amount2);
             Debug.Log("Expected item in slot-1: " + item01.GetId() + "; Expected slot01 amount: " + expectedAmount);
             Assert.IsTrue(slot01.Amount == expectedAmount && slot01.Item.GetId().Equals(item01.GetId()));
         }

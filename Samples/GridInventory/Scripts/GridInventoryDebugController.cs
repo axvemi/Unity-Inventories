@@ -6,22 +6,22 @@ namespace Axvemi.Inventories.Samples
     {
         [SerializeField] private GridInventorySampleManager inventorySampleManager;
 
-        private Inventory<Item> inventory => inventorySampleManager.Inventory;
+        private Inventory<Item> Inventory => inventorySampleManager.Inventory;
 
         public void AddInventorySlot() 
         {
-            inventory.CreateNewSlot();
+            Inventory.CreateNewSlot();
         }
 
         public void RemoveInventorySlot()
         {
-            if (inventory.Slots.Count == 0) return;
-            inventory.RemoveSlot(inventory.Slots[inventory.Slots.Count - 1]);
+            if (Inventory.Slots.Count == 0) return;
+            Inventory.RemoveSlot(Inventory.Slots[Inventory.Slots.Count - 1]);
         }
 
         public void AddItem(ItemScriptableObject itemScriptableObject)
         {
-            inventory.AddItem(new Item(itemScriptableObject));
+            Inventory.AddItem(new Item(itemScriptableObject));
         }
     }
 }

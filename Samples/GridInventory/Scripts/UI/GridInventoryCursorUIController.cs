@@ -12,12 +12,12 @@ namespace Axvemi.Inventories.Samples
         [SerializeField] private GameObject inventoryCursorUI;
         [SerializeField] private Image itemImage;
 
-        private GridInventoryCursorController inventoryCursorController;
+        private GridInventoryCursorController _inventoryCursorController;
 
         private void Awake()
         {
-            inventoryCursorController = GetComponent<GridInventoryCursorController>();
-            inventoryCursorController.MouseInventorySlot.OnSlotUpdated += OnCursorSlotUpdated;
+            _inventoryCursorController = GetComponent<GridInventoryCursorController>();
+            _inventoryCursorController.MouseInventorySlot.OnSlotUpdated += OnCursorSlotUpdated;
             inventoryCursorUI.SetActive(false);
         }
 
@@ -34,7 +34,7 @@ namespace Axvemi.Inventories.Samples
             else
             {
                 inventoryCursorUI.SetActive(true);
-                itemImage.sprite = slot.Item.ItemScriptableObject.Sprite;
+                itemImage.sprite = slot.Item.ItemScriptableObject.sprite;
             }
         }
     }

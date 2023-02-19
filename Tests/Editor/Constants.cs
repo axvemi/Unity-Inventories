@@ -20,9 +20,9 @@ public static class Constants
         ItemScriptableObject singleAmountScriptableObject = GetItemScriptableObject("SingleAmountInventoryItem");
         ItemScriptableObject stackAmountScriptableObject = GetItemScriptableObject("StackAmountInventoryItem");
 
-        itemsScriptableObjectDictionary.Add(infiniteAmountScriptableObject.Id, infiniteAmountScriptableObject);
-        itemsScriptableObjectDictionary.Add(singleAmountScriptableObject.Id, singleAmountScriptableObject);
-        itemsScriptableObjectDictionary.Add(stackAmountScriptableObject.Id, stackAmountScriptableObject);
+        itemsScriptableObjectDictionary.Add(infiniteAmountScriptableObject.id, infiniteAmountScriptableObject);
+        itemsScriptableObjectDictionary.Add(singleAmountScriptableObject.id, singleAmountScriptableObject);
+        itemsScriptableObjectDictionary.Add(stackAmountScriptableObject.id, stackAmountScriptableObject);
 
         return itemsScriptableObjectDictionary;
     }

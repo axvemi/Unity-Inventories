@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Axvemi.Inventories.Samples
 {
@@ -8,17 +9,17 @@ namespace Axvemi.Inventories.Samples
     [CreateAssetMenu(fileName = "InventoryItem", menuName = "Axvemi/Inventories/Inventory Item")]
     public class ItemScriptableObject : ScriptableObject
     {
-        public string Id;
+        [FormerlySerializedAs("Id")] public string id;
         
-        [Header("Data")]
-        public int MaxAmount;
+        [FormerlySerializedAs("MaxAmount")] [Header("Data")]
+        public int maxAmount;
         
-        [Header("Visuals")]
-        public Sprite Sprite;
+        [FormerlySerializedAs("Sprite")] [Header("Visuals")]
+        public Sprite sprite;
 
         public override string ToString()
         {
-            return "Id: " + Id;
+            return "Id: " + id;
         }
     }
 }

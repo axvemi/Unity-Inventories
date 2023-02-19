@@ -16,19 +16,19 @@ namespace Axvemi.Inventories.Samples
                 throw new ArgumentNullException();
             }
 
-            this.ItemScriptableObject = itemScriptableObject;
+            ItemScriptableObject = itemScriptableObject;
         }
 
-        public string GetId() => this.ItemScriptableObject.Id;
+        public string GetId() => ItemScriptableObject.id;
 
         public int GetMaxStackAmount()
         {
-            return ItemScriptableObject.MaxAmount;
+            return ItemScriptableObject.maxAmount;
         }
 
         public override string ToString()
         {
-            return "Id: " + ItemScriptableObject.Id;
+            return "Id: " + ItemScriptableObject.id;
         }
     }
 }

@@ -1,6 +1,6 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace Axvemi.Inventories.Samples
 {
@@ -13,16 +13,16 @@ namespace Axvemi.Inventories.Samples
         [SerializeField] private Image image;
         [SerializeField] private TextMeshProUGUI amountText;
 
-        private InventorySlot<Item> slot;
+        private InventorySlot<Item> _slot;
 
         public InventorySlot<Item> Slot
         {
-            get => slot;
+            get => _slot;
             set
             {
-                slot = value;
-                slot.OnSlotUpdated += ShowSlot;
-                ShowSlot(slot);
+                _slot = value;
+                _slot.OnSlotUpdated += ShowSlot;
+                ShowSlot(_slot);
             }
         }
 
@@ -38,7 +38,7 @@ namespace Axvemi.Inventories.Samples
             }
             else {
                 image.gameObject.SetActive(true);
-                image.sprite = slot.Item.ItemScriptableObject.Sprite;
+                image.sprite = slot.Item.ItemScriptableObject.sprite;
                 amountText.gameObject.SetActive(true);
                 amountText.SetText(slot.Amount.ToString());
             }

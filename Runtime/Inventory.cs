@@ -12,7 +12,7 @@ namespace Axvemi.Inventories
         /// <summary>
         /// Slots of the inventory
         /// </summary>
-        public List<InventorySlot<T>> Slots { get; } = new();
+        public List<InventorySlot<T>> Slots { get; set; } = new();
 
         /// <summary>
         /// A new slot has been added to the inventory

@@ -13,7 +13,7 @@ namespace Axvemi.Inventories
         public event Action<InventorySlot<T>> OnSlotUpdated;
         
         public Inventory<T> Inventory { get; set; }
-        public T Item { get; private set; }
+        public T Item { get; set; }
 
         private int _amount;
         

@@ -218,10 +218,13 @@ namespace Axvemi.Inventories
 
         public int GetRemainingSpaceForItem(T item)
         {
-            if (item.IsInfiniteStack()) return int.MaxValue;
-
             List<InventorySlot<T>> emptySlots = FindEmptySlotList();
             List<InventorySlot<T>> slotsWithItem = FindInventorySlotListWithItem(item);
+
+            if (item.IsInfiniteStack() && (emptySlots.Count > 0 || slotsWithItem.Count > 0))
+            {
+                return int.MaxValue;
+            }
 
             int remainingSpace = 0;
             remainingSpace += emptySlots.Count * item.GetMaxStackAmount();
